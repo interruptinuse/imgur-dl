@@ -94,10 +94,10 @@ def main():
 
             def parse_delegate(node, range):
                 if node.type == 'VariableDeclarator' and node.id.name == 'images':
-                    global images
                     start, end = node.init.range
                     data = json.loads(script[start:end])
                     if 'count' in data and 'images' in data:
+                        nonlocal images
                         images.update(data)
             try:
                 for script in scripts:
@@ -128,7 +128,7 @@ def main():
                           miniters=1) as progress:
                     downloaded = 0
                     def updatehook(nblocks, bsize, fsize):
-                        global downloaded
+                        nonlocal downloaded
                         progress.update(nblocks*bsize - downloaded)
                         downloaded = nblocks*bsize
 
